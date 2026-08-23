@@ -1,4 +1,52 @@
 package speedfast;
 
-public class Pedido {
+// Clase abstracta, base de todos los pedidos
+public abstract class Pedido {
+
+    // Atributos comunes
+    private int idPedido;
+    private String direccionEntrega;
+    private int distanciaKm;
+
+    // Constructor
+    public Pedido(int idPedido, String direccionEntrega, int distanciaKm) {
+        this.idPedido = idPedido;
+        this.direccionEntrega = direccionEntrega;
+        this.distanciaKm = distanciaKm;
+    }
+
+    // Getters y setters
+    public int getIdPedido() {
+        return idPedido;
+    }
+
+    public void setIdPedido(int idPedido) {
+        this.idPedido = idPedido;
+    }
+
+    public String getDireccionEntrega() {
+        return direccionEntrega;
+    }
+
+    public void setDireccionEntrega(String direccionEntrega) {
+        this.direccionEntrega = direccionEntrega;
+    }
+
+    public int getDistanciaKm() {
+        return distanciaKm;
+    }
+
+    public void setDistanciaKm(int distanciaKm) {
+        this.distanciaKm = distanciaKm;
+    }
+
+    // Muestra los datos del pedido
+    public void mostrarResumen() {
+        System.out.println(getClass().getSimpleName() + " #" + idPedido);
+        System.out.println("Dirección: " + direccionEntrega);
+        System.out.println("Distancia: " + distanciaKm + " km");
+    }
+
+    // Metodo abstracto, cada subclase lo implementa
+    public abstract int calcularTiempoEntrega();
 }
