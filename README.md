@@ -5,27 +5,27 @@ Actividad de Programación Orientada a Objetos 2.
 ## De qué se trata
 
 Es un sistema de reparto para una empresa que se llama SpeedFast.
-El programa trabaja con distintos tipos de pedidos y le asigna un
-repartidor a cada uno.
+El programa calcula el tiempo estimado de entrega de distintos
+tipos de pedidos.
 
-En esta actividad practico la sobrecarga y la sobreescritura de métodos.
+En esta actividad practico las clases abstractas y la herencia.
 
 ## Clases del proyecto
 
-- **Pedido**: clase base con los datos del pedido.
-- **PedidoComida**: pedido de comida (repartidor con mochila térmica).
-- **PedidoEncomienda**: pedido de encomienda (valida peso y embalaje).
-- **PedidoExpress**: pedido rápido (busca el repartidor más cercano).
+- **Pedido**: clase abstracta con los datos comunes del pedido.
+- **PedidoComida**: 15 min + 2 min por km.
+- **PedidoEncomienda**: 20 min + 1.5 min por km.
+- **PedidoExpress**: 10 min base, si es mayor a 5 km suma 5 min.
 - **Main**: clase con el main que prueba todo.
 
 ## Cómo funciona
 
-Cada tipo de pedido tiene su propia forma de asignar el repartidor
-(sobreescritura). También hay un método que recibe el nombre del
-repartidor por parámetro (sobrecarga).
+La clase Pedido es abstracta y tiene un metodo mostrarResumen()
+que muestra los datos, y un metodo abstracto calcularTiempoEntrega()
+que cada subclase implementa con su propia formula.
 
-En el Main creo un pedido de cada tipo, los guardo en un arreglo y
-los recorro con un for para ver que cada uno responde diferente.
+En el Main creo un pedido de cada tipo, los guardo en un arreglo
+y los recorro con un for para mostrar el resumen y el tiempo de cada uno.
 
 ## Hecho por
 
