@@ -47,6 +47,16 @@ public abstract class Pedido {
         System.out.println("Distancia: " + distanciaKm + " km");
     }
 
-    // Metodo abstracto, cada subclase lo implementa
+    // Metodo abstracto, cada subclase calcula su tiempo
     public abstract int calcularTiempoEntrega();
+
+    // Metodo generico, cada subclase lo sobrescribe
+    public void asignarRepartidor() {
+        System.out.println("Asignando un repartidor al pedido #" + idPedido + ".");
+    }
+
+    // Metodo sobrecargado, recibe el nombre del repartidor
+    public void asignarRepartidor(String nombreRepartidor) {
+        System.out.println("Repartidor asignado: " + nombreRepartidor);
+    }
 }

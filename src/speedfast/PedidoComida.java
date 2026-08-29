@@ -13,4 +13,10 @@ public class PedidoComida extends Pedido {
     public int calcularTiempoEntrega() {
         return 15 + (2 * getDistanciaKm());
     }
+
+    // Sobrescritura: repartidor con mochila térmica
+    @Override
+    public void asignarRepartidor() {
+        System.out.println("Asignando repartidor con mochila térmica para el pedido #" + getIdPedido() + ".");
+    }
 }

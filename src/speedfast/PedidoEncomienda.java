@@ -14,4 +14,10 @@ public class PedidoEncomienda extends Pedido {
         double tiempo = 20 + (1.5 * getDistanciaKm());
         return (int) tiempo;
     }
+
+    // Sobrescritura: valida peso y embalaje antes de asignar
+    @Override
+    public void asignarRepartidor() {
+        System.out.println("Validando peso y embalaje del pedido #" + getIdPedido() + " antes de asignar repartidor.");
+    }
 }
