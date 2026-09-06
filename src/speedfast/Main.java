@@ -1,46 +1,46 @@
 package speedfast;
 
-// Clase principal, simula el sistema completo de SpeedFast
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
+// Clase principal, simula varios repartidores entregando en paralelo
 public class Main {
 
     public static void main(String[] args) {
 
-        System.out.println("===== SISTEMA DE REPARTO SPEEDFAST =====\n");
+        System.out.println("===== SISTEMA DE REPARTO SPEEDFAST =====");
+        System.out.println("Iniciando entregas en paralelo...\n");
 
-        // Se crea un pedido de cada tipo (con su distancia en km)
+        // Se crean algunos pedidos
         Pedido pedido1 = new PedidoComida(101, "Av. Italia 456", 4);
         Pedido pedido2 = new PedidoEncomienda(102, "Av. Santa Rosa 567", 7);
         Pedido pedido3 = new PedidoExpress(103, "Av. Apoquindo 1500", 3);
+        Pedido pedido4 = new PedidoComida(104, "Av. Grecia 789", 5);
+        Pedido pedido5 = new PedidoEncomienda(105, "Av. Matta 321", 6);
+        Pedido pedido6 = new PedidoExpress(106, "Av. Vicuña 654", 8);
 
-        // Se crea el controlador que maneja despacho, cancelación e historial
-        ControladorDeEnvios controlador = new ControladorDeEnvios();
+        // Se crean los repartidores y se les asignan pedidos
+        Repartidor camila = new Repartidor("Camila");
+        camila.agregarPedido(pedido1);
+        camila.agregarPedido(pedido2);
 
-        // ===== PEDIDO 1: se procesa completo =====
-        pedido1.mostrarResumen();
-        pedido1.asignarRepartidor();                 // asignación automática (sobrescrita)
-        pedido1.asignarRepartidor("Luis Díaz");      // asignación manual (sobrecargada)
-        System.out.println("Tiempo estimado: " + pedido1.calcularTiempoEntrega() + " minutos");
-        controlador.despachar();
-        controlador.agregarAlHistorial("PedidoComida #101 - entregado por Luis Díaz");
-        System.out.println();
+        Repartidor luis = new Repartidor("Luis");
+        luis.agregarPedido(pedido3);
+        luis.agregarPedido(pedido4);
 
-        // ===== PEDIDO 2: se procesa completo =====
-        pedido2.mostrarResumen();
-        pedido2.asignarRepartidor();
-        pedido2.asignarRepartidor("Daniela Tapia");
-        System.out.println("Tiempo estimado: " + pedido2.calcularTiempoEntrega() + " minutos");
-        controlador.despachar();
-        controlador.agregarAlHistorial("PedidoEncomienda #102 - entregado por Daniela Tapia");
-        System.out.println();
+        Repartidor daniela = new Repartidor("Daniela");
+        daniela.agregarPedido(pedido5);
+        daniela.agregarPedido(pedido6);
 
-        // ===== PEDIDO 3: se cancela =====
-        System.out.println("Cancelando Pedido Express #103...");
-        controlador.cancelar();
-        System.out.println();
+        // Se crea el ExecutorService que ejecutará los repartidores en paralelo
+        ExecutorService executor = Executors.newFixedThreadPool(3);
 
-        // ===== Se muestra el historial de entregas =====
-        controlador.verHistorial();
+        // Se lanzan los tres repartidores como hilos
+        executor.execute(camila);
+        executor.execute(luis);
+        executor.execute(daniela);
 
-        System.out.println("\n===== FIN DEL PROCESO =====");
+        // Se cierra el executor (no acepta más tareas, pero termina las actuales)
+        executor.shutdown();
     }
 }
