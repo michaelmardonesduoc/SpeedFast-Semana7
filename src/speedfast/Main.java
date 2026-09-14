@@ -2,45 +2,45 @@ package speedfast;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 
-// Clase principal, simula varios repartidores entregando en paralelo
 public class Main {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
 
-        System.out.println("===== SISTEMA DE REPARTO SPEEDFAST =====");
-        System.out.println("Iniciando entregas en paralelo...\n");
+        // 1. Zona de carga compartida
+        ZonaDeCarga zona = new ZonaDeCarga();
 
-        // Se crean algunos pedidos
-        Pedido pedido1 = new PedidoComida(101, "Av. Italia 456", 4);
-        Pedido pedido2 = new PedidoEncomienda(102, "Av. Santa Rosa 567", 7);
-        Pedido pedido3 = new PedidoExpress(103, "Av. Apoquindo 1500", 3);
-        Pedido pedido4 = new PedidoComida(104, "Av. Grecia 789", 5);
-        Pedido pedido5 = new PedidoEncomienda(105, "Av. Matta 321", 6);
-        Pedido pedido6 = new PedidoExpress(106, "Av. Vicuña 654", 8);
+        // 2. Crea los pedidos con tus subclases.
+        //    Si tus subclases piden datos extra, usa tus lineas originales
+        //    (solo manten los nombres pedido1, pedido2, ...).
+        Pedido pedido1 = new PedidoComida(101, "Santiago Centro", 5);
+        Pedido pedido2 = new PedidoEncomienda(102, "Providencia", 8);
+        Pedido pedido3 = new PedidoExpress(103, "Ñuñoa", 3);
+        Pedido pedido4 = new PedidoComida(104, "Recoleta", 6);
+        Pedido pedido5 = new PedidoEncomienda(105, "Las Condes", 10);
 
-        // Se crean los repartidores y se les asignan pedidos
-        Repartidor camila = new Repartidor("Camila");
-        camila.agregarPedido(pedido1);
-        camila.agregarPedido(pedido2);
+        // Se agregan a la zona compartida
+        zona.agregarPedido(pedido1);
+        zona.agregarPedido(pedido2);
+        zona.agregarPedido(pedido3);
+        zona.agregarPedido(pedido4);
+        zona.agregarPedido(pedido5);
+        System.out.println();
 
-        Repartidor luis = new Repartidor("Luis");
-        luis.agregarPedido(pedido3);
-        luis.agregarPedido(pedido4);
-
-        Repartidor daniela = new Repartidor("Daniela");
-        daniela.agregarPedido(pedido5);
-        daniela.agregarPedido(pedido6);
-
-        // Se crea el ExecutorService que ejecutará los repartidores en paralelo
+        // 3. Tres repartidores compartiendo la misma zona
         ExecutorService executor = Executors.newFixedThreadPool(3);
+        executor.execute(new Repartidor("Juan", zona));
+        executor.execute(new Repartidor("Camila", zona));
+        executor.execute(new Repartidor("Pedro", zona));
 
-        // Se lanzan los tres repartidores como hilos
-        executor.execute(camila);
-        executor.execute(luis);
-        executor.execute(daniela);
-
-        // Se cierra el executor (no acepta más tareas, pero termina las actuales)
+        // 4. Esperar a que terminen todos
         executor.shutdown();
+        executor.awaitTermination(1, TimeUnit.MINUTES);
+
+        // 5. Mensaje final
+        System.out.println("[Zona de carga vacía]");
+        System.out.println();
+        System.out.println("Todos los pedidos han sido entregados correctamente");
     }
 }

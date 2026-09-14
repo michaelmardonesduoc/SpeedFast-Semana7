@@ -7,12 +7,14 @@ public abstract class Pedido {
     private int idPedido;
     private String direccionEntrega;
     private int distanciaKm;
+    private EstadoPedido estado;
 
     // Constructor
     public Pedido(int idPedido, String direccionEntrega, int distanciaKm) {
         this.idPedido = idPedido;
         this.direccionEntrega = direccionEntrega;
         this.distanciaKm = distanciaKm;
+        this.estado = EstadoPedido.PENDIENTE;
     }
 
     // Getters y setters
@@ -38,6 +40,14 @@ public abstract class Pedido {
 
     public void setDistanciaKm(int distanciaKm) {
         this.distanciaKm = distanciaKm;
+    }
+
+    public EstadoPedido getEstado() {
+        return estado;
+    }
+
+    public void setEstado(EstadoPedido estado) {
+        this.estado = estado;
     }
 
     // Muestra los datos del pedido
