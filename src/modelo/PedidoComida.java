@@ -1,4 +1,4 @@
-package speedfast;
+package modelo;
 
 // Pedido de comida
 public class PedidoComida extends Pedido {

@@ -1,4 +1,4 @@
-package speedfast;
+package modelo;
 
 // Interface para pedidos que se pueden cancelar
 public interface Cancelable {

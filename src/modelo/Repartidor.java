@@ -1,4 +1,4 @@
-package speedfast;
+package modelo;
 
 // Repartidor que retira y entrega pedidos desde la zona de carga compartida.
 public class Repartidor implements Runnable {

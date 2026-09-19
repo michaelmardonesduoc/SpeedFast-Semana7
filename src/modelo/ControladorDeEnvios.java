@@ -1,4 +1,4 @@
-package speedfast;
+package modelo;
 
 import java.util.ArrayList;
 

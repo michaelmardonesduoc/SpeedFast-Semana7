@@ -1,4 +1,4 @@
-package speedfast;
+package modelo;
 
 // Clase abstracta, base de todos los pedidos
 public abstract class Pedido {

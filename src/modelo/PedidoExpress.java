@@ -1,4 +1,4 @@
-package speedfast;
+package modelo;
 
 // Pedido express
 public class PedidoExpress extends Pedido {

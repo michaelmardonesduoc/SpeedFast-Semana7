@@ -1,4 +1,4 @@
-package speedfast;
+package modelo;
 
 // Pedido de encomienda
 public class PedidoEncomienda extends Pedido {
