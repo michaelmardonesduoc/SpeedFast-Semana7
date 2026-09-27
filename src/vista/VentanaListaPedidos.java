@@ -1,40 +1,42 @@
 package vista;
 
-import modelo.ControladorPedidos;
+import dao.PedidoDAO;
 import modelo.Pedido;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
+import java.util.List;
 
-// Muestra los pedidos en una tabla.
+// Muestra en una tabla los pedidos leidos desde la base de datos.
 public class VentanaListaPedidos extends JFrame {
 
-    public VentanaListaPedidos(ControladorPedidos controlador) {
-
+    public VentanaListaPedidos() {
         setTitle("Lista de Pedidos");
-        setSize(500, 300);
+        setSize(550, 300);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLocationRelativeTo(null);
 
-        // Columnas de la tabla
-        String[] columnas = {"ID", "Dirección", "Distancia (km)", "Estado"};
+        String[] columnas = {"ID", "Dirección", "Tipo", "Estado"};
         DefaultTableModel modelo = new DefaultTableModel(columnas, 0);
 
-        // Llena la tabla con los pedidos actuales
-        for (Pedido pedido : controlador.getPedidos()) {
+        // Consulta los pedidos guardados en la base de datos
+        PedidoDAO pedidoDAO = new PedidoDAO();
+        List<Pedido> pedidos = pedidoDAO.listarTodos();
+
+        for (Pedido pedido : pedidos) {
+            String tipo = pedido.getClass().getSimpleName().replace("Pedido", "");
             Object[] fila = {
                     pedido.getIdPedido(),
                     pedido.getDireccionEntrega(),
-                    pedido.getDistanciaKm(),
+                    tipo,
                     pedido.getEstado()
             };
             modelo.addRow(fila);
         }
 
         JTable tabla = new JTable(modelo);
-        JScrollPane scroll = new JScrollPane(tabla); // barra de desplazamiento
-
+        JScrollPane scroll = new JScrollPane(tabla);
         add(scroll, BorderLayout.CENTER);
 
         setVisible(true);
